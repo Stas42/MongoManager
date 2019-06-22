@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace MongoManager
 {
-    class AppConnection
+    public class AppConnection
     {
        private  MongoClient client = null;
 
@@ -31,6 +31,7 @@ namespace MongoManager
                return false;
             }
             return true;
+            
         }
     }
 }

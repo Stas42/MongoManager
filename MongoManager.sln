@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoManager", "MongoManager\MongoManager.csproj", "{A25CD847-346A-425C-9ADC-594106066301}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestForMongoManager", "XUnitTestForMongoManager\XUnitTestForMongoManager.csproj", "{DBCAC905-5B28-4E04-88FD-9AEE6A5A5E87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A25CD847-346A-425C-9ADC-594106066301}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A25CD847-346A-425C-9ADC-594106066301}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A25CD847-346A-425C-9ADC-594106066301}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBCAC905-5B28-4E04-88FD-9AEE6A5A5E87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBCAC905-5B28-4E04-88FD-9AEE6A5A5E87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBCAC905-5B28-4E04-88FD-9AEE6A5A5E87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBCAC905-5B28-4E04-88FD-9AEE6A5A5E87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

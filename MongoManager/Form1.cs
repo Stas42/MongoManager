@@ -413,12 +413,12 @@ namespace MongoManager
             {
                 string selecteddb = comboBox7.Text;
                 string selectedcoll = comboBox5.Text;
-                string fieldName = textBox5.Text;
-                string fieladValue = textBox7.Text;
-                string fieldName1 = textBox10.Text;
-                string fieldValue1 = textBox9.Text;
-                string fieldName2 = textBox12.Text;
-                int fieldValue2 = Convert.ToInt32(textBox11.Text);
+                //string fieldName = textBox5.Text;
+                //string fieladValue = textBox7.Text;
+                //string fieldName1 = textBox10.Text;
+                //string fieldValue1 = textBox9.Text;
+                //string fieldName2 = textBox12.Text;
+                //int fieldValue2 = Convert.ToInt32(textBox11.Text);
                 string objectId = textBox8.Text;
                 IMongoDatabase db = appConnection.client1.GetDatabase(selecteddb);
                 IMongoCollection<BsonDocument> collection = db.GetCollection<BsonDocument>(selectedcoll);
