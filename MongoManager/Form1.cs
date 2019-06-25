@@ -171,14 +171,15 @@ namespace MongoManager
             
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void ShowDocsButton(object sender, EventArgs e)//Show Button
         {
+            richTextBox1.Clear();
             string selectedDb = comboBox3.Text;
             string selectColl = comboBox4.Text;
             IMongoDatabase db = appConnection.client1.GetDatabase(selectedDb);
             IMongoCollection<BsonDocument> collVariable = db.GetCollection<BsonDocument>(selectColl);
             var resultDoc = collVariable.Find(new BsonDocument()).ToList();
-            richTextBox1.Text = "Output: \n";
+            //richTextBox1.Text = "Output: \n";
             foreach (var item in resultDoc)
             {
                 richTextBox1.Text = richTextBox1.Text + item + System.Environment.NewLine;
@@ -240,7 +241,7 @@ namespace MongoManager
                 textBox6.Text = "Enter DB Name";
                 textBox4.ReadOnly = false;
             }
-            else /*(comboBox1.SelectedItem == "Create Collection")*/
+            else 
             {
                 textBox4.Visible = false;
                 textBox6.Clear();
@@ -263,10 +264,8 @@ namespace MongoManager
                     {
                         dblistOperations.Add(Convert.ToString(doc["name"]));
                     }
-
-                    comboBox2.DataSource = dblistOperations;
-                    //comboBox3.SelectedIndexChanged += comboBox3_SelectedIndexChanged;
-                }
+                      comboBox2.DataSource = dblistOperations;
+                 }
             }
         }
         private void ComboBox3_DropDown(object sender, System.EventArgs e)
@@ -296,7 +295,6 @@ namespace MongoManager
             {
                 MessageBox.Show("Failed to Create Client.....\n" + ex.ToString(), "Mongo Manager Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
         }
         private void ComboBox4_DropDown(object sender, System.EventArgs e)
         {
@@ -312,8 +310,7 @@ namespace MongoManager
             comboBox4.DataSource = collectionList;
             comboBox4.SelectedIndexChanged += comboBox4_SelectedIndexChanged;
         }
-
-        private void button2_Click_2(object sender, EventArgs e)
+            private void button2_Click_2(object sender, EventArgs e)
         {
             if (comboBox1.SelectedItem == "Create DB")//Creates DB
             {
@@ -341,10 +338,8 @@ namespace MongoManager
                 BsonDocument findDoc = new BsonDocument(new BsonElement("PersonFirstName", "Stas"));
                 collection.FindOneAndDelete(findDoc);
             }
-
         }
-
-        private void comboBox6_SelectedIndexChanged_1(object sender, EventArgs e)
+            private void comboBox6_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             if (comboBox6.Text == "Add")
             {
@@ -356,7 +351,6 @@ namespace MongoManager
                 textBox11.Enabled = true;
                 textBox10.Enabled = true;
                 textBox8.Enabled = false;
-
             }
             else if (comboBox6.Text == "Delete")
             {
@@ -396,16 +390,12 @@ namespace MongoManager
                 int fieldValue2 = Convert.ToInt32(textBox11.Text);
                 IMongoDatabase db = appConnection.client1.GetDatabase(selecteddb);
                 IMongoCollection<BsonDocument> collection = db.GetCollection<BsonDocument>(selectedcoll);
-                
-                //BsonElement add = new element(fieldName, fieldValue, fieldName1, fieldValue2);
-
                 var doc = new BsonDocument
                 {
                 {fieldName, fieldValue},
                 {fieldName1, fieldValue1},
                 {fieldName2, fieldValue2}
                 };
-
                 collection.InsertOneAsync(doc);
                 //collection.InsertOne(doc);
             }
@@ -413,19 +403,9 @@ namespace MongoManager
             {
                 string selecteddb = comboBox7.Text;
                 string selectedcoll = comboBox5.Text;
-                //string fieldName = textBox5.Text;
-                //string fieladValue = textBox7.Text;
-                //string fieldName1 = textBox10.Text;
-                //string fieldValue1 = textBox9.Text;
-                //string fieldName2 = textBox12.Text;
-                //int fieldValue2 = Convert.ToInt32(textBox11.Text);
                 string objectId = textBox8.Text;
                 IMongoDatabase db = appConnection.client1.GetDatabase(selecteddb);
                 IMongoCollection<BsonDocument> collection = db.GetCollection<BsonDocument>(selectedcoll);
-
-                //BsonDocument findDoc = new BsonDocument(new BsonElement(fieldName, fieladValue));
-                //collection.FindOneAndDelete(findDoc);
-
                 //delete by id
                 var query = Builders<BsonDocument>.Filter.Eq("_id", new ObjectId(objectId));
                 var updateDoc = collection.DeleteOne(query);
@@ -453,7 +433,7 @@ namespace MongoManager
                 var query = Builders<BsonDocument>.Filter.Eq("_id", new ObjectId(objectId));
                 var updateDoc = collection.FindOneAndReplace(query, findDoc);
 
-                button4_Click(sender, e);
+                ShowDocsButton(sender, e);
 
             }
         }       private void ComboBox7_DropDown(object sender, System.EventArgs e)
@@ -486,25 +466,6 @@ namespace MongoManager
             }
             comboBox5.DataSource = collectionDocs;
             comboBox5.SelectedIndexChanged += comboBox4_SelectedIndexChanged;
-        }
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tabPage2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox11_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -131,10 +131,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(399, 18);
+            this.button1.Location = new System.Drawing.Point(399, 23);
             this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(68, 25);
+            this.button1.Size = new System.Drawing.Size(68, 20);
             this.button1.TabIndex = 17;
             this.button1.Text = "Connect";
             this.button1.UseVisualStyleBackColor = true;
@@ -171,14 +171,14 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(399, 82);
+            this.button4.Location = new System.Drawing.Point(399, 88);
             this.button4.Margin = new System.Windows.Forms.Padding(2);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(68, 25);
+            this.button4.Size = new System.Drawing.Size(68, 21);
             this.button4.TabIndex = 35;
             this.button4.Text = "Show Docs";
             this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.button4.Click += new System.EventHandler(this.ShowDocsButton);
             // 
             // groupBox1
             // 
@@ -310,7 +310,6 @@
             this.tabPage1.Size = new System.Drawing.Size(408, 122);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "DB Operations";
-            this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
             // textBox6
             // 
@@ -330,10 +329,10 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(13, 90);
+            this.button2.Location = new System.Drawing.Point(13, 97);
             this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(68, 25);
+            this.button2.Size = new System.Drawing.Size(68, 21);
             this.button2.TabIndex = 59;
             this.button2.Text = "Save";
             this.button2.UseVisualStyleBackColor = true;
@@ -386,7 +385,6 @@
             this.tabPage2.Size = new System.Drawing.Size(408, 122);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Docs Operations";
-            this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
             // 
             // textBox11
             // 
@@ -396,7 +394,6 @@
             this.textBox11.Size = new System.Drawing.Size(112, 20);
             this.textBox11.TabIndex = 77;
             this.textBox11.Text = "Enter Numeric Value";
-            this.textBox11.TextChanged += new System.EventHandler(this.textBox11_TextChanged);
             // 
             // textBox12
             // 
@@ -445,10 +442,10 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(11, 89);
+            this.button3.Location = new System.Drawing.Point(11, 97);
             this.button3.Margin = new System.Windows.Forms.Padding(2);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(68, 25);
+            this.button3.Size = new System.Drawing.Size(68, 21);
             this.button3.TabIndex = 71;
             this.button3.Text = "Save";
             this.button3.UseVisualStyleBackColor = true;
