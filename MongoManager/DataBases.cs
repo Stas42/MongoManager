@@ -8,33 +8,30 @@ using MongoDB.Bson;
 
 namespace MongoManager
 {
-        public class Dbs
-        
-   {
-        public string Database { get; set; }
-        public string Name { get; set; }
-
-
-        ////Get Database and Collection  
-        //MongoClient dbClient = new MongoClient("mongodb://127.0.0.1:27017"); 
-        //IMongoDatabase db = dbClient.GetDatabase("test");
-        //var collList = db.ListCollections().ToList();
-        //Console.WriteLine("The list of collections are :");  
-        //foreach (var item in collList)  
-        //{  
-        //   Console.WriteLine(item);  
-        //}
-
-        public static void Createdb()
-            {
-
-            //Console.WriteLine("The list of collections are :");
-            //foreach (var item in collList)
-            //{
-            //    Console.WriteLine(item);
-            //}
+    public class Dbs
+    {
+        public Dbs()
+        {
 
         }
-    }
 
+        public void CreateCollection(string strDB, string strCollection,
+                                     AppConnection appConnection,
+                                     string  strData1,
+                                     string  strData2)
+        {
+            string selecteddb = strDB;
+            string selectedcoll = strCollection;
+            IMongoDatabase db = appConnection.client1.GetDatabase(selecteddb);
+            IMongoCollection<BsonDocument> collection = db.GetCollection<BsonDocument>(selectedcoll);
+            BsonElement add = new BsonElement(strData1, strData2);
+            BsonDocument doc = new BsonDocument();
+            doc.Add(add);
+            collection.InsertOne(doc);
+            BsonDocument findDoc = new BsonDocument(new BsonElement(strData1, strData2));
+            collection.FindOneAndDelete(findDoc);
+        }
+    }
+        
+ 
 }

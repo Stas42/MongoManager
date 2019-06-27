@@ -314,6 +314,9 @@ namespace MongoManager
         {
             if (comboBox1.SelectedItem == "Create DB")//Creates DB
             {
+                Dbs dbs = new Dbs();
+                dbs.CreateCollection(textBox6.Text, textBox4.Text, appConnection, "PersonFirstName", "Stas");
+                /*
                 string selecteddb = textBox6.Text;
                 string selectedcoll = textBox4.Text;
                 IMongoDatabase db = appConnection.client1.GetDatabase(selecteddb);
@@ -324,19 +327,23 @@ namespace MongoManager
                 collection.InsertOne(doc);
                 BsonDocument findDoc = new BsonDocument(new BsonElement("PersonFirstName", "Stas"));
                 collection.FindOneAndDelete(findDoc);
+                */
             }
             else//Creates Collection
             {
-                string selecteddb = comboBox2.Text;
-                string selectedcoll = textBox6.Text;
-                IMongoDatabase db = appConnection.client1.GetDatabase(selecteddb);
-                IMongoCollection<BsonDocument> collection = db.GetCollection<BsonDocument>(selectedcoll);
-                BsonElement add = new BsonElement("PersonFirstName", "Stas");
-                BsonDocument doc = new BsonDocument();
-                doc.Add(add);
-                collection.InsertOne(doc);
-                BsonDocument findDoc = new BsonDocument(new BsonElement("PersonFirstName", "Stas"));
-                collection.FindOneAndDelete(findDoc);
+                Dbs coll = new Dbs();
+                coll.CreateCollection(comboBox2.Text, textBox6.Text, appConnection, "PersonFirstName", "Stas");
+                
+                //string selecteddb = comboBox2.Text;
+                //string selectedcoll = textBox6.Text;
+                //IMongoDatabase db = appConnection.client1.GetDatabase(selecteddb);
+                //IMongoCollection<BsonDocument> collection = db.GetCollection<BsonDocument>(selectedcoll);
+                //BsonElement add = new BsonElement("PersonFirstName", "Stas");
+                //BsonDocument doc = new BsonDocument();
+                //doc.Add(add);
+                //collection.InsertOne(doc);
+                //BsonDocument findDoc = new BsonDocument(new BsonElement("PersonFirstName", "Stas"));
+                //collection.FindOneAndDelete(findDoc);
             }
         }
             private void comboBox6_SelectedIndexChanged_1(object sender, EventArgs e)
@@ -365,6 +372,8 @@ namespace MongoManager
             }
             else
             {
+                UpdateTextBoxes("Update", true, true, true, true, true, true, true);
+                /*
                 button3.Text = "Update";
                 textBox5.Enabled = true;
                 textBox7.Enabled = true;
@@ -373,7 +382,21 @@ namespace MongoManager
                 textBox11.Enabled = true;
                 textBox10.Enabled = true;
                 textBox8.Enabled = true;
-            }
+            */}
+        }
+
+        private void UpdateTextBoxes(String strText, 
+            bool b1, bool b2, bool b3, bool b4, bool b5, bool b6, bool b7)
+        {
+            button3.Text = strText;
+            textBox5.Enabled = b1;
+            textBox7.Enabled = b2;
+            textBox9.Enabled = b3;
+            textBox12.Enabled = b4;
+            textBox11.Enabled = b5;
+            textBox10.Enabled = b6;
+            textBox8.Enabled = b7;
+
         }
 
         private void button3_Click_1(object sender, EventArgs e)
