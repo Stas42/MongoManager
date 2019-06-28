@@ -316,34 +316,11 @@ namespace MongoManager
             {
                 CreateDB dbs = new CreateDB();
                 dbs.CreateDBs(textBox6.Text, textBox4.Text, appConnection, "PersonFirstName", "Stas");
-                /*
-                string selecteddb = textBox6.Text;
-                string selectedcoll = textBox4.Text;
-                IMongoDatabase db = appConnection.client1.GetDatabase(selecteddb);
-                IMongoCollection<BsonDocument> collection = db.GetCollection<BsonDocument>(selectedcoll);
-                BsonElement add = new BsonElement("PersonFirstName", "Stas");
-                BsonDocument doc = new BsonDocument();
-                doc.Add(add);
-                collection.InsertOne(doc);
-                BsonDocument findDoc = new BsonDocument(new BsonElement("PersonFirstName", "Stas"));
-                collection.FindOneAndDelete(findDoc);
-                */
             }
             else//Creates Collection
             {
                 CreateDB coll = new CreateDB();
                 coll.CreateDBs(comboBox2.Text, textBox6.Text, appConnection, "PersonFirstName", "Stas");
-                
-                //string selecteddb = comboBox2.Text;
-                //string selectedcoll = textBox6.Text;
-                //IMongoDatabase db = appConnection.client1.GetDatabase(selecteddb);
-                //IMongoCollection<BsonDocument> collection = db.GetCollection<BsonDocument>(selectedcoll);
-                //BsonElement add = new BsonElement("PersonFirstName", "Stas");
-                //BsonDocument doc = new BsonDocument();
-                //doc.Add(add);
-                //collection.InsertOne(doc);
-                //BsonDocument findDoc = new BsonDocument(new BsonElement("PersonFirstName", "Stas"));
-                //collection.FindOneAndDelete(findDoc);
             }
         }
             private void comboBox6_SelectedIndexChanged_1(object sender, EventArgs e)
@@ -403,61 +380,45 @@ namespace MongoManager
         {
             if (comboBox6.SelectedItem == "Add")//Add
             {
-                string selecteddb = comboBox7.Text;
-                string selectedcoll = comboBox5.Text;
-                string fieldName = textBox5.Text;
-                string fieldValue = textBox7.Text;
-                string fieldName1 = textBox10.Text;
-                string fieldValue1 = textBox9.Text;
-                string fieldName2 = textBox12.Text;
-                int fieldValue2 = Convert.ToInt32(textBox11.Text);
-                IMongoDatabase db = appConnection.client1.GetDatabase(selecteddb);
-                IMongoCollection<BsonDocument> collection = db.GetCollection<BsonDocument>(selectedcoll);
-                var doc = new BsonDocument
-                {
-                {fieldName, fieldValue},
-                {fieldName1, fieldValue1},
-                {fieldName2, fieldValue2}
-                };
-                collection.InsertOneAsync(doc);
-                //collection.InsertOne(doc);
+                AddDoc doc = new AddDoc();
+                doc.AddDocs
+                    (
+                    comboBox7.Text,
+                    comboBox5.Text,
+                    textBox5.Text,
+                    textBox7.Text,
+                    textBox10.Text,
+                    textBox9.Text,
+                    textBox12.Text,
+                    Convert.ToInt32(textBox11.Text),
+                    appConnection
+                    );
+                ShowDocsButton(sender, e);
             }
             else if (comboBox6.SelectedItem == "Delete")//Delete
             {
-                string selecteddb = comboBox7.Text;
-                string selectedcoll = comboBox5.Text;
-                string objectId = textBox8.Text;
-                IMongoDatabase db = appConnection.client1.GetDatabase(selecteddb);
-                IMongoCollection<BsonDocument> collection = db.GetCollection<BsonDocument>(selectedcoll);
-                //delete by id
-                var query = Builders<BsonDocument>.Filter.Eq("_id", new ObjectId(objectId));
-                var updateDoc = collection.DeleteOne(query);
+                DeleteDoc del = new DeleteDoc();
+                del.DeleteDocs(comboBox7.Text, comboBox5.Text,textBox8.Text,appConnection);
+                ShowDocsButton(sender, e);
             }
             else //Update
             {
-                string selecteddb = comboBox7.Text;
-                string selectedcoll = comboBox5.Text;
-                string fieldName = textBox5.Text;
-                string fieldValue = textBox7.Text;
-                string fieldName1 = textBox10.Text;
-                string fieldValue1 = textBox9.Text;
-                string fieldName2 = textBox12.Text;
-                int fieldValue2 = Convert.ToInt32(textBox11.Text);
-                string objectId = textBox8.Text;
-                IMongoDatabase db = appConnection.client1.GetDatabase(selecteddb);
-                IMongoCollection<BsonDocument> collection = db.GetCollection<BsonDocument>(selectedcoll);
-                
-                BsonDocument findDoc = new BsonDocument
-                {
-                {fieldName, fieldValue},
-                {fieldName1, fieldValue1},
-                {fieldName2, fieldValue2}
-                };
-                var query = Builders<BsonDocument>.Filter.Eq("_id", new ObjectId(objectId));
-                var updateDoc = collection.FindOneAndReplace(query, findDoc);
-
+                UpdateDoc udoc = new UpdateDoc();
+                udoc.UpdateDocs
+                    (
+                comboBox7.Text,
+                comboBox5.Text,
+                textBox5.Text,
+                textBox7.Text,
+                textBox10.Text,
+                textBox9.Text,
+                textBox12.Text,
+                Convert.ToInt32(textBox11.Text),
+                textBox8.Text,
+                appConnection
+                    );
+              
                 ShowDocsButton(sender, e);
-
             }
         }       private void ComboBox7_DropDown(object sender, System.EventArgs e)
         {
