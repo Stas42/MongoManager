@@ -314,8 +314,8 @@ namespace MongoManager
         {
             if (comboBox1.SelectedItem == "Create DB")//Creates DB
             {
-                Dbs dbs = new Dbs();
-                dbs.CreateCollection(textBox6.Text, textBox4.Text, appConnection, "PersonFirstName", "Stas");
+                CreateDB dbs = new CreateDB();
+                dbs.CreateDBs(textBox6.Text, textBox4.Text, appConnection, "PersonFirstName", "Stas");
                 /*
                 string selecteddb = textBox6.Text;
                 string selectedcoll = textBox4.Text;
@@ -331,8 +331,8 @@ namespace MongoManager
             }
             else//Creates Collection
             {
-                Dbs coll = new Dbs();
-                coll.CreateCollection(comboBox2.Text, textBox6.Text, appConnection, "PersonFirstName", "Stas");
+                CreateDB coll = new CreateDB();
+                coll.CreateDBs(comboBox2.Text, textBox6.Text, appConnection, "PersonFirstName", "Stas");
                 
                 //string selecteddb = comboBox2.Text;
                 //string selectedcoll = textBox6.Text;

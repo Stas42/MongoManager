@@ -8,14 +8,14 @@ using MongoDB.Bson;
 
 namespace MongoManager
 {
-    public class Dbs
+    public class CreateDB
     {
-        public Dbs()
+        public CreateDB()
         {
 
         }
 
-        public void CreateCollection(string strDB, string strCollection,
+        public void CreateDBs(string strDB, string strCollection,
                                      AppConnection appConnection,
                                      string  strData1,
                                      string  strData2)

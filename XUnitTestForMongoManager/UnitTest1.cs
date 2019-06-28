@@ -14,58 +14,65 @@ namespace XUnitTestForMongoManager
     public class UnitTest1
     {
         AppConnection appConnection = new AppConnection();
-        string newDbName = "stasdb35";//Enter new db name
-        string newcollection= "StasUnitColl3";
+        //appConnection.ConnectServer("mongodb://127.0.0.1:27017", null);
+
+        string newDbName = "stasdb43";//Enter new db name
+        string newcollection= "StasUnitTCreateColl3";
 
         [Fact]  
         public void CreateDB()
         {
-            //Vars:
             appConnection.ConnectServer("mongodb://127.0.0.1:27017",null);
-            //string newDbName = "stasdb34";//Enter new db name
-            //string selectedcoll = "StasUnitColl";
-
-            //Create new db
-            IMongoDatabase db = appConnection.client1.GetDatabase(newDbName);
-            IMongoCollection<BsonDocument> collection = db.GetCollection<BsonDocument>(newcollection);
-            BsonElement add = new BsonElement("PersonFirstName", "Stas");
-            BsonDocument doc = new BsonDocument();
-            doc.Add(add);
-            collection.InsertOne(doc);
-            BsonDocument findDoc = new BsonDocument(new BsonElement("PersonFirstName", "Stas"));
-            collection.FindOneAndDelete(findDoc);
-                       
+                             
             UnitTest1 existingdbname = new UnitTest1();
             var result = existingdbname.DatabaseExists(newDbName);
 
-            Assert.True(result);//Checks true/false saved in "result"
+            if (result == true)// DB already exists check
+            {
+                Fail("DB already exists");
+            }
+            else
+            {
+                CreateDB create = new CreateDB();
+                create.CreateDBs(newDbName, newcollection, appConnection, "Field", "Value");
+                var result1 = existingdbname.DatabaseExists(newDbName);
+
+                Assert.True(result1);//Checks true/false saved in "result"
+            }
         }
-         private bool DatabaseExists(string database)//Checks(bool) if db exist
-         {  
+         public bool DatabaseExists(string database)//Checks(bool) if db exist
+         {
             appConnection.ConnectServer("mongodb://127.0.0.1:27017", null);
             var existdbList = appConnection.client1.ListDatabases().ToList().Select(db => db.GetValue("name").AsString);
             return existdbList.Contains(database);
          }
 
+        public static void Fail(string message)
+        {
+            throw new Xunit.Sdk.XunitException(message);
+        }
+
         [Fact]
         public void CreateCollection()
         {
             appConnection.ConnectServer("mongodb://127.0.0.1:27017", null);
-            IMongoDatabase db = appConnection.client1.GetDatabase(newDbName);
-            IMongoCollection<BsonDocument> collection = db.GetCollection<BsonDocument>(newcollection);
-            BsonElement add = new BsonElement("PersonFirstName", "Stas");
-            BsonDocument doc = new BsonDocument();
-            doc.Add(add);
-            collection.InsertOne(doc);
-            BsonDocument findDoc = new BsonDocument(new BsonElement("PersonFirstName", "Stas"));
-            collection.FindOneAndDelete(findDoc);
-
+            
             UnitTest1 existingcollname = new UnitTest1();
             var result = existingcollname.CollectionExists(newcollection);
+            
+            if (result == true)// Collection already exists check
+            {
+                Fail("The Collectionn already exists");
+            }
+            else
+            {
+                CreateDB create = new CreateDB();
+                create.CreateDBs(newDbName, newcollection, appConnection, "Field", "Value");
+                var result1 = existingcollname.DatabaseExists(newDbName);
 
-            Assert.True(result);//Checks true/false saved in "result"
+                Assert.True(result1);//Checks true/false saved in "result"
+            }
         }
-
         private bool CollectionExists(string collection)//Checks(bool) if db exist
         {
             appConnection.ConnectServer("mongodb://127.0.0.1:27017", null);
