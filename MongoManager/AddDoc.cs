@@ -8,10 +8,10 @@ using MongoDB.Bson;
 
 namespace MongoManager
 {
-    class AddDoc
+    public class AddDoc
     {
         public void AddDocs
-            (
+        (
                 string strDB,
                 string strColl,
                 string strData1,
@@ -21,7 +21,7 @@ namespace MongoManager
                 string strData5,
                 int strData6,
                 AppConnection appConnection
-         )
+        )
         {
             string selecteddb = strDB;
             string selectedcoll = strColl;
@@ -41,6 +41,6 @@ namespace MongoManager
                 {fieldName2, fieldValue2}
                 };
             collection.InsertOneAsync(_doc);
-        }
+         }
     }
 }

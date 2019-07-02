@@ -15,81 +15,27 @@ using System.Data.SqlClient;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Drawing.Drawing2D;
 
-//using MongoDB.Builders;
-
-
 namespace MongoManager
 {
     public partial class Form1 : Form
     {
         private AppConnection appConnection = new AppConnection();//initialized local variable
-        List<string> dblist = new List<string>();
-        
+        List<string> dblist = new List<string>();      
         List<string> dblistOperations = new List<string>();
         List<string> dblistDocs = new List<string>();
         List<string> collectionDocs = new List<string>();
         public Form1()
-
         {
-            InitializeComponent();
-            
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        public void button1_Click(object sender, EventArgs e)
-        {
-           
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
+            InitializeComponent();          
+        }      
         private void Form1_Load(object sender, EventArgs e)
         {
             pictureBox3.Visible = true;
         }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        public void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
-                        
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void groupBox1_Enter(object sender, EventArgs e)
         {
             pictureBox3.Visible = false;
         }
-
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
-
         public void button1_Click_1(object sender, EventArgs e)
         {
             try
@@ -105,9 +51,7 @@ namespace MongoManager
                     MessageBox.Show("The Client is connected to .....\n" + connectionstring.ToString(), "Mongo Manager Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     richTextBox3.Text = richTextBox3.Text + System.Environment.NewLine + "user connected at " + DateTime.Now;// The log
                     textBox3.Text = textBox3.Text + System.Environment.NewLine + "connected";
-
                     pictureBox2.Visible = true;
-
                     if (pictureBox2.Visible == true)
                     {
                         pictureBox1.Visible = false;
@@ -126,57 +70,27 @@ namespace MongoManager
                     comboBox4.ResetText();
                     pictureBox1.Visible = true;
                 }
-            
-
-                if (pictureBox1.Visible == true)
+                 if (pictureBox1.Visible == true)
                 {
                     pictureBox2.Visible = false;
                     pictureBox3.Visible = false;
                 }
-                
             }
             catch(Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
         }
-
-        private void richTextBox3_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label9_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void richTextBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
             
         }
-
         private void ShowDocsButton(object sender, EventArgs e)//Show Button
         {
             richTextBox1.Clear();
             string selectedDb = comboBox3.Text;
             string selectColl = comboBox4.Text;
-            IMongoDatabase db = appConnection.client1.GetDatabase(selectedDb);
+            IMongoDatabase db = appConnection.client1.GetDatabase(selectedDb);  
             IMongoCollection<BsonDocument> collVariable = db.GetCollection<BsonDocument>(selectColl);
             var resultDoc = collVariable.Find(new BsonDocument()).ToList();
             //richTextBox1.Text = "Output: \n";
@@ -185,73 +99,42 @@ namespace MongoManager
                 richTextBox1.Text = richTextBox1.Text + item + System.Environment.NewLine;
             }
          }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
-
         private void textBox1_TextChanged_1(object sender, EventArgs e)
         {
             pictureBox3.Visible = true;
         }
-
-        private void label2_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
-        {
-
-        }
-
-        public void pictureBox1_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void pictureBox2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox3_Click(object sender, EventArgs e)
-        {
-            
-        }
-
         private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
-
         public void comboBox1_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             if (comboBox1.SelectedItem == "Create DB")
             {
-                textBox4.Visible = true;
-                textBox4.Text = "Enter Collection Name";
-                comboBox2.Enabled = false;
-                textBox6.Text = "Enter DB Name";
-                textBox4.ReadOnly = false;
+                UpdateTextBoxes1(true, false, "Enter DB Name", "Enter Collection Name",false);
             }
             else 
             {
-                textBox4.Visible = false;
+                UpdateTextBoxes1(false, true, "Enter Collection Name", "Choose DB", true);
                 textBox6.Clear();
-                comboBox2.Enabled = true;
-                textBox6.Text = "Enter Collection Name";
-                comboBox2.Text = "Choose DB";
-                textBox4.ReadOnly = true;
              }
         }
-        private void ComboBox2_DropDown(object sender, System.EventArgs e)
+        private void UpdateTextBoxes1(bool b1, bool b2, string strText, string strText1, bool b3)//5 Items. The method sets fields values 
+        {
+            textBox4.Visible = b1;
+            comboBox2.Enabled = b2;
+            textBox6.Text = strText;//"Enter Collection Name";
+            if (comboBox1.SelectedItem == "Create DB")
+            {
+                textBox4.Text = strText1;
+            }
+            else
+            {
+                comboBox2.Text = strText1;//"Choose DB";
+            }
+            textBox4.ReadOnly = b3;
+        }
+        private void ComboBox2_DropDown(object sender, System.EventArgs e)//DB Operations -->Choose DB 
         {
             dblistOperations.Clear();
             comboBox2.DataSource = null;
@@ -268,12 +151,12 @@ namespace MongoManager
                  }
             }
         }
-        private void ComboBox3_DropDown(object sender, System.EventArgs e)
+        private void ComboBox3_DropDown(object sender, System.EventArgs e)//Connections-->Choose DB drop
         {
             try
             {
                 //Clears "dblsit" list + erases Datasource--> 
-                //-->That way every time the "ComboBox3_DropDown" is called it's bring the updated data
+                //-->That way every time the "ComboBox3_DropDown" is called it brings the updated data
                 dblist.Clear();
                 comboBox3.DataSource = null;
                 comboBox4.Text = "Choose Collection";
@@ -296,7 +179,7 @@ namespace MongoManager
                 MessageBox.Show("Failed to Create Client.....\n" + ex.ToString(), "Mongo Manager Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void ComboBox4_DropDown(object sender, System.EventArgs e)
+        private void ComboBox4_DropDown(object sender, System.EventArgs e)//Connections-->Choose Collection
         {
             string selected = comboBox3.Text;
             List<string> collectionList = new List<string>();
@@ -310,7 +193,7 @@ namespace MongoManager
             comboBox4.DataSource = collectionList;
             comboBox4.SelectedIndexChanged += comboBox4_SelectedIndexChanged;
         }
-            private void button2_Click_2(object sender, EventArgs e)
+        private void button2_Click_2(object sender, EventArgs e)
         {
             if (comboBox1.SelectedItem == "Create DB")//Creates DB
             {
@@ -323,47 +206,23 @@ namespace MongoManager
                 coll.CreateDBs(comboBox2.Text, textBox6.Text, appConnection, "PersonFirstName", "Stas");
             }
         }
-            private void comboBox6_SelectedIndexChanged_1(object sender, EventArgs e)
+        private void comboBox6_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             if (comboBox6.Text == "Add")
             {
-                button3.Text = "Add";
-                textBox5.Enabled = true;
-                textBox7.Enabled = true;
-                textBox9.Enabled = true;
-                textBox12.Enabled = true;
-                textBox11.Enabled = true;
-                textBox10.Enabled = true;
-                textBox8.Enabled = false;
+                UpdateTextBoxes("Add", true, true, true, true, true, true,false);
             }
             else if (comboBox6.Text == "Delete")
             {
-                button3.Text = "Delete";
-                textBox5.Enabled = false;
-                textBox7.Enabled = false;
-                textBox9.Enabled = false;
-                textBox12.Enabled= false;
-                textBox11.Enabled= false;
-                textBox10.Enabled= false;
-                textBox8.Enabled = true;
+                UpdateTextBoxes("Delete", false, false, false, false, false, false, true);
             }
             else
             {
                 UpdateTextBoxes("Update", true, true, true, true, true, true, true);
-                /*
-                button3.Text = "Update";
-                textBox5.Enabled = true;
-                textBox7.Enabled = true;
-                textBox9.Enabled = true;
-                textBox12.Enabled = true;
-                textBox11.Enabled = true;
-                textBox10.Enabled = true;
-                textBox8.Enabled = true;
-            */}
+            }
         }
-
         private void UpdateTextBoxes(String strText, 
-            bool b1, bool b2, bool b3, bool b4, bool b5, bool b6, bool b7)
+            bool b1, bool b2, bool b3, bool b4, bool b5, bool b6, bool b7)//8 Items. The method sets fields values 
         {
             button3.Text = strText;
             textBox5.Enabled = b1;
@@ -373,9 +232,7 @@ namespace MongoManager
             textBox11.Enabled = b5;
             textBox10.Enabled = b6;
             textBox8.Enabled = b7;
-
         }
-
         private void button3_Click_1(object sender, EventArgs e)
         {
             if (comboBox6.SelectedItem == "Add")//Add
@@ -416,11 +273,11 @@ namespace MongoManager
                 Convert.ToInt32(textBox11.Text),
                 textBox8.Text,
                 appConnection
-                    );
-              
+                    );          
                 ShowDocsButton(sender, e);
             }
-        }       private void ComboBox7_DropDown(object sender, System.EventArgs e)
+        }
+        private void ComboBox7_DropDown(object sender, System.EventArgs e)//Docs Operations-->Choose DB
         {
             comboBox7.Text = "Choose DB";
             using (IAsyncCursor<BsonDocument> cursor = appConnection.client1.ListDatabases())
@@ -431,13 +288,12 @@ namespace MongoManager
                     {
                         dblistDocs.Add(Convert.ToString(doc["name"]));
                     }
-
                     comboBox7.DataSource = dblistDocs;
                     comboBox7.SelectedIndexChanged += comboBox3_SelectedIndexChanged;
                 }
             }
         }
-        private void ComboBox5_DropDown(object sender, System.EventArgs e)
+        private void ComboBox5_DropDown(object sender, System.EventArgs e)//Docs Operations-->Choose Collection
         {
             comboBox5.Text = "Choose Collection";
             string selected = comboBox7.Text;

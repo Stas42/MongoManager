@@ -85,7 +85,6 @@
             this.richTextBox1.Size = new System.Drawing.Size(764, 202);
             this.richTextBox1.TabIndex = 9;
             this.richTextBox1.Text = "Output...\n";
-            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // label6
             // 
@@ -106,7 +105,6 @@
             this.richTextBox3.Size = new System.Drawing.Size(307, 172);
             this.richTextBox3.TabIndex = 25;
             this.richTextBox3.Text = "Logs...";
-            this.richTextBox3.TextChanged += new System.EventHandler(this.richTextBox3_TextChanged);
             // 
             // label3
             // 
@@ -127,7 +125,6 @@
             this.label2.Size = new System.Drawing.Size(191, 13);
             this.label2.TabIndex = 18;
             this.label2.Text = "Example : mongodb://127.0.0.1:27017";
-            this.label2.Click += new System.EventHandler(this.label2_Click_1);
             // 
             // button1
             // 
@@ -147,7 +144,6 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(318, 20);
             this.textBox1.TabIndex = 16;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged_1);
             // 
             // textBox3
             // 
@@ -157,7 +153,6 @@
             this.textBox3.ReadOnly = true;
             this.textBox3.Size = new System.Drawing.Size(130, 20);
             this.textBox3.TabIndex = 23;
-            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // label1
             // 
@@ -224,7 +219,6 @@
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox3.TabIndex = 39;
             this.pictureBox3.TabStop = false;
-            this.pictureBox3.Click += new System.EventHandler(this.pictureBox3_Click);
             // 
             // pictureBox2
             // 
@@ -237,7 +231,6 @@
             this.pictureBox2.TabIndex = 38;
             this.pictureBox2.TabStop = false;
             this.pictureBox2.Visible = false;
-            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
             // pictureBox1
             // 
@@ -250,7 +243,6 @@
             this.pictureBox1.TabIndex = 37;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Visible = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // comboBox3
             // 
@@ -282,7 +274,6 @@
             this.groupBox2.TabIndex = 24;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Operations";
-            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // tabDbOperations
             // 
