@@ -8,7 +8,7 @@ using MongoDB.Bson;
 
 namespace MongoManager
 {
-    class DeleteDoc
+    public class DeleteDoc
     {
         public void DeleteDocs
             (

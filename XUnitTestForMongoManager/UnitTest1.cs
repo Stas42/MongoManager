@@ -14,22 +14,16 @@ namespace XUnitTestForMongoManager
     public class UnitTest1
     {
         AppConnection appConnection = new AppConnection();
-        //appConnection.ConnectServer("mongx`odb://127.0.0.1:27017", null);
 
-        //Create DB vars
-        static string newDbName = "stasdb54";
-        string newcollection = "StasUnitTCreateColl4";
-
-        //Create Coll vars
-        readonly string newDbName1 = newDbName;
-        string newcollection1 = "StasUnitTCreateColl5";
-
-
-        [Fact]  
+        [Fact]
         public void CreateDB_1()//Verifies a DB created and exists
         {
-            appConnection.ConnectServer("mongodb://127.0.0.1:27017",null);
-                             
+            AppConnection appConnection = new AppConnection();
+            appConnection.ConnectServer("mongodb://127.0.0.1:27017", null);
+
+            string newDbName = "stasdb55";
+            string newcollection = "StasUnitTCreateColl5";
+
             UnitTest1 existingdbname = new UnitTest1();
             var result = existingdbname.DatabaseExists(newDbName);
 
@@ -46,12 +40,13 @@ namespace XUnitTestForMongoManager
                 Assert.True(result1);//Checks true/false saved in "result"
             }
         }
-         public bool DatabaseExists(string database)//Checks(bool) if db exist
-         {
+
+        public bool DatabaseExists(string database)//Checks(bool) if db exist
+        {
             appConnection.ConnectServer("mongodb://127.0.0.1:27017", null);
             var existdbList = appConnection.client1.ListDatabases().ToList().Select(db => db.GetValue("name").AsString);
             return existdbList.Contains(database);
-         }
+        }
 
         public static void Fail(string message)
         {
@@ -61,11 +56,13 @@ namespace XUnitTestForMongoManager
         [Fact]
         public void CreateCollection_2()//Verifies a collection created in specific db 
         {
+            string newDbName1 = "stasdb55";
+            string newcollection1 = "StasUnitTCreateColl6";
             appConnection.ConnectServer("mongodb://127.0.0.1:27017", null);
-            
+
             UnitTest1 existingcollname = new UnitTest1();
             var result = existingcollname.CollectionExists(newcollection1);
-            
+
             if (result == true)// Collection already exists check
             {
                 Fail("The Collectionn already exists");
@@ -74,64 +71,76 @@ namespace XUnitTestForMongoManager
             {
                 CreateDB create = new CreateDB();
                 create.CreateDBs(newDbName1, newcollection1, appConnection, "Field", "Value");
-                var result1 = existingcollname.DatabaseExists(newDbName);
+                var result1 = existingcollname.DatabaseExists(newDbName1);
 
                 Assert.True(result1);//Checks true/false saved in "result"
             }
         }
+
         private bool CollectionExists(string collection)//Checks(bool) if db exist
         {
+            string newDbName1 = "stasdb55";
             appConnection.ConnectServer("mongodb://127.0.0.1:27017", null);
             IMongoDatabase db = appConnection.client1.GetDatabase(newDbName1);
             var collList = db.ListCollections().ToList().Select(coll => coll.GetValue("name").AsString);
             return collList.Contains(collection);
         }
-       [Fact]
-       public void AddDoc_3()// Verifies the added doc is created in a specific collection (by objectid)
-                             // Flow : Add Doc--> Get the id --> Assert.equal(not null)...
+
+        [Fact]
+        public void AddDoc_3()// Verifies the added doc is created in a specific collection (by objectid)
+                              // Flow : Add Doc--> Get its id and save it in a variable 
+                              // Perform  Assert.Notnull(saved after created) ...
         {
             appConnection.ConnectServer("mongodb://127.0.0.1:27017", null);
 
-            AddDoc add = new AddDoc();//Creates doc
-            add.AddDocs
+            AddDoc addDoc = new AddDoc();
+            var result = addDoc.AddDocs
                 (
-                "stasdb54",
-                "StasUnitTCreateColl5",
+                "stasdb55",
+                "StasUnitTCreateColl6",
                 "Brand",
-                "Sam",
+                "Mitsubishi4",
                 "Model",
-                "S9",
+                "A3",
                 "Price",
-                1000,
+                250000,
                 appConnection
                 );
 
-            //return Convert.ToString(add["_id"]).ToString;
-
-            //var result = return Convert.ToString(add["_id"]);
-
-            //Assert.Equal(add, add);
-
+            Assert.NotNull(result);
         }
+        [Fact]//The False result is expected. Passed if false.
+        public void DeleteDoc_4()//The "method test" tests the DeleteDoc method by its id from specific collection
+                                 //Verifies it doesn't exist 
+        {
+            appConnection.ConnectServer("mongodb://127.0.0.1:27017", null);
+            string db = "stasdb55";
+            string coll = "StasUnitTCreateColl6";
+            string id = "5d28b17813301f69d4cd33ba";
 
-        //public string DocExist(string docId)
-        //{
-        //    AddDoc add = new AddDoc();//Creates doc
-        //    add.AddDocs
-        //        (
-        //        newDbName,
-        //        newcollection,
-        //        "Brand",
-        //        "Sam",
-        //        "Model",
-        //        "S9",
-        //        "Price",
-        //        1000,
-        //        appConnection
-        //        );
-        //        //return docId["_id"];
-        //}
+            DeleteDoc del = new DeleteDoc();
+            del.DeleteDocs
+                (
+                    db,
+                    coll,
+                    id,
+                    appConnection
+                );
+            UnitTest1 docID = new UnitTest1();
+            var result = docID.SelectDoc(db,coll,id);
 
+            Assert.False(result);
+        }
+        private bool SelectDoc(string db, string coll, string id)
+        {
+            appConnection.ConnectServer("mongodb://127.0.0.1:27017", null);
+            IMongoDatabase dbs = appConnection.client1.GetDatabase(db);
+            IMongoCollection<BsonDocument> collection = dbs.GetCollection<BsonDocument>(coll);
+            var filter_id = Builders<BsonDocument>.Filter.Eq("_id", new ObjectId(id));
+            var entity = collection.Find(filter_id).FirstOrDefault();
+            return (Convert.ToString(entity?["_id"])).Equals(id);//"entity?" - handles null reference exception +
+                                                                 //+ makes "entity" variable to be nullble            
+        }
     }
-}
+} 
 

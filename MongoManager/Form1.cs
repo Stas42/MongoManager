@@ -19,7 +19,7 @@ namespace MongoManager
 {
     public partial class Form1 : Form
     {
-        private AppConnection appConnection = new AppConnection();//initialized local variable
+        public AppConnection appConnection = new AppConnection();//initialized local variable
         List<string> dblist = new List<string>();      
         List<string> dblistOperations = new List<string>();
         List<string> dblistDocs = new List<string>();

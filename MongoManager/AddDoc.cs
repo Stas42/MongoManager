@@ -10,7 +10,11 @@ namespace MongoManager
 {
     public class AddDoc
     {
-        public void AddDocs
+        public AddDoc()
+        {
+                
+        }
+        public string AddDocs
         (
                 string strDB,
                 string strColl,
@@ -35,12 +39,14 @@ namespace MongoManager
             IMongoDatabase db = appConnection.client1.GetDatabase(selecteddb);
             IMongoCollection<BsonDocument> collection = db.GetCollection<BsonDocument>(selectedcoll);
             var _doc = new BsonDocument
-                {
+            {
                 {fieldName, fieldValue},
                 {fieldName1, fieldValue1},
                 {fieldName2, fieldValue2}
-                };
-            collection.InsertOneAsync(_doc);
-         }
+            };
+            collection.InsertOne(_doc);
+            return Convert.ToString(_doc["_id"]);
+        }
+
     }
 }
