@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using log4net;
 
 namespace MongoManager
 {
@@ -20,9 +21,12 @@ namespace MongoManager
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
 
+            string messageStart = "MongoManager Stopped";
+            //string messageStop = messageStart;
 
-            log.Info("MongoManager Started");
-            
+            log.Info(messageStart);
         }
+
     }
+
 }

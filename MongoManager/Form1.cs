@@ -14,11 +14,13 @@ using MongoDB.Driver.Linq;
 using System.Data.SqlClient;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Drawing.Drawing2D;
+using log4net;
 
 namespace MongoManager
 {
     public partial class Form1 : Form
     {
+        public static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public AppConnection appConnection = new AppConnection();//initialized local variable
         List<string> dblist = new List<string>();      
         List<string> dblistOperations = new List<string>();
@@ -26,7 +28,8 @@ namespace MongoManager
         List<string> collectionDocs = new List<string>();
         public Form1()
         {
-            InitializeComponent();          
+            InitializeComponent();
+            log.Info("MongoManager Started");
         }      
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -49,6 +52,7 @@ namespace MongoManager
                 {
                     textBox3.Clear();
                     MessageBox.Show("The Client is connected to .....\n" + connectionstring.ToString(), "Mongo Manager Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    log.Info("The Client is connected to ..." + connectionstring.ToString());
                     richTextBox3.Text = richTextBox3.Text + System.Environment.NewLine + "user connected at " + DateTime.Now;// The log
                     textBox3.Text = textBox3.Text + System.Environment.NewLine + "connected";
                     pictureBox2.Visible = true;
@@ -63,7 +67,7 @@ namespace MongoManager
                     textBox3.Clear();
                     richTextBox1.Clear();
                     MessageBox.Show("Failed to Create Client.....\n" + strerror, "Mongo Manager Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Program.log.Error("Failed to Create Client");
+                    log.Error("Failed to Create Client");
                     richTextBox3.Text = richTextBox3.Text + System.Environment.NewLine + "Connection Error at: " + DateTime.Now;// The log
                     textBox3.Text = textBox3.Text + System.Environment.NewLine + "not connected";
                     comboBox3.ResetText();
@@ -79,6 +83,7 @@ namespace MongoManager
             catch(Exception ex)
             {
                 MessageBox.Show(ex.ToString());
+                log.Fatal(ex.ToString());
             }
         }
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
@@ -98,7 +103,8 @@ namespace MongoManager
             {
                 richTextBox1.Text = richTextBox1.Text + item + System.Environment.NewLine;
             }
-         }
+            log.Info("Show Data called for ..." + "db: " + selectedDb + " " + "Collection: " +selectColl);
+        }
         private void textBox1_TextChanged_1(object sender, EventArgs e)
         {
             pictureBox3.Visible = true;
@@ -235,10 +241,10 @@ namespace MongoManager
         }
         private void button3_Click_1(object sender, EventArgs e)
         {
-            if (comboBox6.SelectedItem == "Add")//Add
+            if (comboBox6.SelectedItem == "Add")//Add + return docID
             {
                 AddDoc doc = new AddDoc();
-                doc.AddDocs
+                var result = doc.AddDocs
                     (
                     comboBox7.Text,
                     comboBox5.Text,
@@ -251,12 +257,14 @@ namespace MongoManager
                     appConnection
                     );
                 ShowDocsButton(sender, e);
+                log.Info("A doc added ..." + "db:" + comboBox7.Text + " " + "Collection:" + comboBox5.Text + " " + "docid:" + result);
             }
             else if (comboBox6.SelectedItem == "Delete")//Delete
             {
                 DeleteDoc del = new DeleteDoc();
                 del.DeleteDocs(comboBox7.Text, comboBox5.Text,textBox8.Text,appConnection);
                 ShowDocsButton(sender, e);
+                log.Info("A doc deleted from..." + "db:" + comboBox7.Text + " " + "Collection:" + comboBox5.Text + " " + "docid:" + textBox8.Text);
             }
             else //Update
             {
@@ -275,6 +283,7 @@ namespace MongoManager
                 appConnection
                     );          
                 ShowDocsButton(sender, e);
+                log.Info("A doc updated in..." + "db:" + comboBox7.Text + " " + "Collection:" + comboBox5.Text + " " + "docid:" + textBox8.Text);
             }
         }
         private void ComboBox7_DropDown(object sender, System.EventArgs e)//Docs Operations-->Choose DB

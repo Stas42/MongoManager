@@ -18,9 +18,7 @@ namespace XUnitTestForMongoManager
         [Fact]
         public void CreateDB_1()//Verifies a DB created and exists
         {
-            AppConnection appConnection = new AppConnection();
             appConnection.ConnectServer("mongodb://127.0.0.1:27017", null);
-
             string newDbName = "stasdb55";
             string newcollection = "StasUnitTCreateColl5";
 
@@ -40,14 +38,12 @@ namespace XUnitTestForMongoManager
                 Assert.True(result1);//Checks true/false saved in "result"
             }
         }
-
-        public bool DatabaseExists(string database)//Checks(bool) if db exist
+        public bool DatabaseExists(string database)//Checks(bool) if a db exist
         {
             appConnection.ConnectServer("mongodb://127.0.0.1:27017", null);
             var existdbList = appConnection.client1.ListDatabases().ToList().Select(db => db.GetValue("name").AsString);
             return existdbList.Contains(database);
         }
-
         public static void Fail(string message)
         {
             throw new Xunit.Sdk.XunitException(message);
@@ -109,7 +105,8 @@ namespace XUnitTestForMongoManager
 
             Assert.NotNull(result);
         }
-        [Fact]//The False result is expected. Passed if false.
+
+        [Fact]//The False result is expected. Passed if fails.
         public void DeleteDoc_4()//The "method test" tests the DeleteDoc method by its id from specific collection
                                  //Verifies it doesn't exist 
         {
@@ -131,7 +128,7 @@ namespace XUnitTestForMongoManager
 
             Assert.False(result);
         }
-        private bool SelectDoc(string db, string coll, string id)
+        private bool SelectDoc(string db, string coll, string id) //Selects and verifies if a doc exists - Bool
         {
             appConnection.ConnectServer("mongodb://127.0.0.1:27017", null);
             IMongoDatabase dbs = appConnection.client1.GetDatabase(db);
